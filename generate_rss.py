@@ -185,7 +185,7 @@ def generate_rss_feed(news_items):
             if news_items:
                 print(f"成功抓取到 {len(news_items)} 条招标信息")
                 generate_rss_feed(news_items)
-           else:
+            else:
                 print("未抓取到任何招标信息")
                 # 创建一个空的RSS文件以避免错误
                 fg = FeedGenerator()
@@ -204,6 +204,7 @@ def generate_rss_feed(news_items):
             fg.rss_file('rss.xml')
  
   if __name__ == '__main__':
+
 
 
 
