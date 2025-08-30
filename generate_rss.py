@@ -168,18 +168,17 @@ def generate_rss_feed(news_items):
     fg.link(href='https://www.whzbtbxt.cn', rel='alternate')
     fg.description('自动抓取武汉公共资源交易平台的招标公告、变更公告、中标结果等信息')
     fg.language('zh-cn')
-...     
-...     for news in news_items:
-...         fe = fg.entry()
-...         fe.title(news['title'])
-...         fe.link(href=news['link'])
-...         fe.published(news['pub_date'])
-...         fe.description(news['description'])
-...         fe.category(term=news['category'])
+... for news in news_items:
+...     fe = fg.entry()
+...     fe.title(news['title'])
+...     fe.link(href=news['link'])
+...     fe.published(news['pub_date'])
+...     fe.description(news['description'])
+...     fe.category(term=news['category'])
 ...     
 ...     # 生成RSS文件
-...     fg.rss_file('rss.xml', pretty=True)
-...     print("RSS文件生成成功！")
+... fg.rss_file('rss.xml', pretty=True)
+... print("RSS文件生成成功！")
 ... 
 ... def main():
 ...     print("开始抓取武汉公共资源交易平台招标信息...")
@@ -207,4 +206,5 @@ def generate_rss_feed(news_items):
 ...         fg.rss_file('rss.xml')
 ... 
 ... if __name__ == '__main__':
+
 
