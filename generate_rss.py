@@ -204,6 +204,8 @@ def generate_rss_feed(news_items):
             fg.rss_file('rss.xml')
  
   if __name__ == '__main__':
+      main() 
+
 
 
 
