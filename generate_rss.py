@@ -168,43 +168,42 @@ def generate_rss_feed(news_items):
     fg.link(href='https://www.whzbtbxt.cn', rel='alternate')
     fg.description('自动抓取武汉公共资源交易平台的招标公告、变更公告、中标结果等信息')
     fg.language('zh-cn')
-... for news in news_items:
-...     fe = fg.entry()
-...     fe.title(news['title'])
-...     fe.link(href=news['link'])
-...     fe.published(news['pub_date'])
-...     fe.description(news['description'])
-...     fe.category(term=news['category'])
-...     
-...     # 生成RSS文件
-... fg.rss_file('rss.xml', pretty=True)
-... print("RSS文件生成成功！")
-... 
-... def main():
-...     print("开始抓取武汉公共资源交易平台招标信息...")
-...     try:
-...         news_items = fetch_bidding_info()
-...         if news_items:
-...             print(f"成功抓取到 {len(news_items)} 条招标信息")
-...             generate_rss_feed(news_items)
-...         else:
-...             print("未抓取到任何招标信息")
-...             # 创建一个空的RSS文件以避免错误
-...             fg = FeedGenerator()
-...             fg.title('武汉公共资源交易平台 - 招标信息')
-...             fg.link(href='https://www.whzbtbxt.cn')
-...             fg.description('暂无最新招标信息')
-...             fg.rss_file('rss.xml')
-...             
-...     except Exception as e:
-...         print(f"程序执行出错: {e}")
-...         # 确保总是生成一个RSS文件，即使出错
-...         fg = FeedGenerator()
-...         fg.title('武汉公共资源交易平台 - 招标信息')
-...         fg.link(href='https://www.whzbtbxt.cn')
-...         fg.description('数据抓取暂时出现问题')
-...         fg.rss_file('rss.xml')
-... 
-... if __name__ == '__main__':
+    for news in news_items:
+        fe = fg.entry()
+        fe.title(news['title'])
+        fe.link(href=news['link'])
+        fe.published(news['pub_date'])
+        fe.description(news['description'])
+        fe.category(term=news['category'])
+    fg.rss_file('rss.xml', pretty=True)
+    print("RSS文件生成成功！")
+
+    def main():
+        print("开始抓取武汉公共资源交易平台招标信息...")
+        try:
+            news_items = fetch_bidding_info()
+            if news_items:
+                print(f"成功抓取到 {len(news_items)} 条招标信息")
+                generate_rss_feed(news_items)
+            else:
+           print("未抓取到任何招标信息")
+             # 创建一个空的RSS文件以避免错误
+          fg = FeedGenerator()
+           fg.title('武汉公共资源交易平台 - 招标信息')
+           fg.link(href='https://www.whzbtbxt.cn')
+            fg.description('暂无最新招标信息')
+           fg.rss_file('rss.xml')
+            
+    except Exception as e:
+        print(f"程序执行出错: {e}")
+        # 确保总是生成一个RSS文件，即使出错
+        fg = FeedGenerator()
+      fg.title('武汉公共资源交易平台 - 招标信息')
+         fg.link(href='https://www.whzbtbxt.cn')
+        fg.description('数据抓取暂时出现问题')
+        fg.rss_file('rss.xml')
+ 
+if __name__ == '__main__':
+
 
 
