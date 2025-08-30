@@ -193,7 +193,6 @@ def generate_rss_feed(news_items):
                 fg.link(href='https://www.whzbtbxt.cn')
                 fg.description('暂无最新招标信息')
                 fg.rss_file('rss.xml') 
-            
         except Exception as e:
             print(f"程序执行出错: {e}")
             # 确保总是生成一个RSS文件，即使出错
@@ -202,9 +201,10 @@ def generate_rss_feed(news_items):
             fg.link(href='https://www.whzbtbxt.cn')
             fg.description('数据抓取暂时出现问题')
             fg.rss_file('rss.xml')
- 
-   if __name__ == '__main__':
-       main() 
+  
+    if __name__ == '__main__':
+        main() 
+
 
 
 
