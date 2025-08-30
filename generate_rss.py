@@ -203,8 +203,9 @@ def generate_rss_feed(news_items):
             fg.description('数据抓取暂时出现问题')
             fg.rss_file('rss.xml')
  
-  if __name__ == '__main__':
-      main() 
+   if __name__ == '__main__':
+       main() 
+
 
 
 
