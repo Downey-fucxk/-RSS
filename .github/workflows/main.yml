@@ -1,31 +1,32 @@
 name: 每日更新招标信息RSS
 
 on:
+  push:
+    branches:
+      - main
   schedule:
-    - cron: '*/30 * * * *'  # 每30分钟运行一次
-  workflow_dispatch:        # 允许手动触发
-  push:                    # 代码推送时也运行（用于测试）
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
 
 jobs:
-  update-rss:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
 
-      - name: 设置Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+      # 如果有依赖安装与构建步骤，请在这里补充
+      # - name: 安装依赖
+      #   run: pip install -r requirements.txt
+      # - name: 运行构建脚本
+      #   run: python your_script.py
 
-      - name: 安装依赖
-        run: pip install -r requirements.txt
-
-      - name: 运行抓取脚本
-        run: python generate_rss.py
-
-      - name: 部署到GitHub Pages
+      # 假设输出目录为 output，如有不同请修改
+      - name: 部署到 GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./output
+          # 如果你是首次部署，action 会自动帮你创建 gh-pages 分支
