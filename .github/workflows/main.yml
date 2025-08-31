@@ -1,32 +1,45 @@
-name: 每日更新招标信息RSS
+name: Update RSS Feed
 
 on:
-  push:
-    branches:
-      - main
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '*/5 * * * *'  # 每5分钟运行一次
+  workflow_dispatch:
+  repository_dispatch:
+    types: [manual_trigger]
+  push:
+    branches: [ main ]
 
 permissions:
   contents: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+
     steps:
-      - name: 检出代码
-        uses: actions/checkout@v4
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
 
-      # 如果有依赖安装与构建步骤，请在这里补充
-      # - name: 安装依赖
-      #   run: pip install -r requirements.txt
-      # - name: 运行构建脚本
-      #   run: python your_script.py
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
 
-      # 假设输出目录为 output，如有不同请修改
-      - name: 部署到 GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output
-          # 如果你是首次部署，action 会自动帮你创建 gh-pages 分支
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install feedgen requests beautifulsoup4
+
+    - name: Run RSS generator
+      run: python rss_generator.py
+
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add rss.xml
+        git diff --quiet && git diff --staged --quiet || git commit -m "Update RSS feed - $(date +'%Y-%m-%d %H:%M:%S')"
+        git push
